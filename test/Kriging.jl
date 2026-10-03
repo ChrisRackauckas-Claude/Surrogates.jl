@@ -316,10 +316,8 @@ end
     # forming the inverse at all loses most of its digits — which is the reason
     # the property is deprecated.
     k = Kriging([1.0, 2.0, 3.0], [4.0, 5.0, 6.0], 0.0, 10.0; theta = 1.0)
-    @test_deprecated begin
-        Rinv = k.inverse_of_R
-        @test Rinv * Matrix(k.R_fact) ≈ I
-    end
+    @test_deprecated k.inverse_of_R
+    @test inv(k.R_fact) * Matrix(k.R_fact) ≈ I
 end
 
 @testset "theta is fitted by maximum likelihood" begin
