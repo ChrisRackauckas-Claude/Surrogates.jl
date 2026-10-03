@@ -257,8 +257,10 @@ end
     x = collect(range(0.5, 4.5, length = 4))
     y = vcat(x .^ 2, 2 .* x)
     g = GEK(x, y, lb, ub, theta = 0.3)
-    Rinv = @test_deprecated g.inverse_of_R
-    @test Rinv * Matrix(g.R_fact) ≈ I
+    @test_deprecated begin
+        Rinv = g.inverse_of_R
+        @test Rinv * Matrix(g.R_fact) ≈ I
+    end
 end
 
 @testset "theta is fitted by maximum likelihood" begin
